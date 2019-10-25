@@ -10,6 +10,9 @@ namespace WebApi.Domain.Services
     public interface IHotelService
     {
         Task<IEnumerable<Hotel>> ListAsync();
-        Task<SaveHotelResponse> SaveAsync(Hotel hotel);
+        Task<HotelResponse> SaveAsync(Hotel hotel);
+        Task<HotelResponse> UpdateAsync(int id, Hotel hotel);
+        Task<HotelResponse> DeleteAsync(int id);
+        Task<HotelResponse> FindByIdAsync(int id);
     }
 }
