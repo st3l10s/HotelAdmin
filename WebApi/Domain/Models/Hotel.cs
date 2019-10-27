@@ -9,7 +9,7 @@ namespace WebApi.Domain.Models
     {
         public int ID { get; set; }
         public string Description { get; set; }
-        IList<Room> Rooms { get; set; } = new List<Room>();
-        public bool Enabled { get; set; } = true;
+        public IList<Room> Rooms { get; set; } = new List<Room>();
+        public bool Enabled { get; set; }
     }
 }

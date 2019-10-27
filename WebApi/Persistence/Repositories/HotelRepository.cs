@@ -23,7 +23,9 @@ namespace WebApi.Persistence.Repositories
 
         public async Task<IEnumerable<Hotel>> ListAsync()
         {
-            return await _context.Hotels.ToListAsync();
+            return await _context.Hotels
+                .Include(r => r.Rooms)
+                .ToListAsync();
         }
 
         public async Task<Hotel> FindByIdAsync(int id)

@@ -34,8 +34,8 @@ namespace WebApi.Controllers
         public async Task<IEnumerable<HotelResource>> GetHotels()
         {
             var hotels = await _hotelService.ListAsync();
-
-            return _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelResource>>(hotels);
+            var hotelResources = _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelResource>>(hotels);
+            return hotelResources;
         }
 
         // GET: api/Hotels/5

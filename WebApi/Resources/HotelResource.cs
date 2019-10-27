@@ -9,5 +9,6 @@ namespace WebApi.Resources
     {
         public int ID { get; set; }
         public string Description { get; set; }
+        public IList<RoomResource> Rooms { get; set; } = new List<RoomResource>();
     }
 }

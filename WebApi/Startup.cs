@@ -35,8 +35,12 @@ namespace WebApi
             services.AddControllers();
 
             services.AddScoped<IHotelRepository, HotelRepository>();
-            services.AddScoped<IHotelService, HotelService>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IHotelService, HotelService>();
+            services.AddScoped<IRoomService, RoomService>();
+            
             services.AddAutoMapper(typeof(Startup));
         }
 
