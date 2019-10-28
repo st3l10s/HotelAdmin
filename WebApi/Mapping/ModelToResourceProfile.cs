@@ -12,8 +12,10 @@ namespace WebApi.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<Hotel, HotelResource>();
-            CreateMap<Room, RoomResource>();
+            CreateMap<Hotel, DisplayHotelResource>();
+            CreateMap<Room, DisplayRoomResource>();
+            CreateMap<Room, DisplayRoomMinResource>();
+            CreateMap<RoomType, RoomTypeResource>();
         }
     }
 }

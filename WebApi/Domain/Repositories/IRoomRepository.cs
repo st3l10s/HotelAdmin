@@ -13,5 +13,7 @@ namespace WebApi.Domain.Repositories
         Task AddAsync(Room room);
         void Update(Room room);
         void Remove(Room room);
+        Task<bool> RoomTypeExists(int id);
+        Task<bool> HotelExists(int id);
     }
 }

@@ -37,7 +37,8 @@ namespace WebApi.Domain.Services
             catch (Exception e)
             {
                 //TODO - Log the exception
-                return new HotelResponse($"An error ocurred while saving the Hotel: { e.Message }");
+                return new HotelResponse($"An error ocurred while saving the Hotel: " +
+                    $"{ e.Message } { e.InnerException?.Message }");
             }
         }
 
@@ -62,7 +63,8 @@ namespace WebApi.Domain.Services
             catch(Exception e)
             {
                 //TODO - log the exception
-                return new HotelResponse($"An error ocurred while updating the hotel: { e.Message }");
+                return new HotelResponse($"An error ocurred while updating the hotel: " +
+                    $"{ e.Message } { e.InnerException?.Message }");
             }
         }
 
@@ -84,7 +86,8 @@ namespace WebApi.Domain.Services
             }
             catch (Exception e)
             {
-                return new HotelResponse($"An error ocurred while deleting the hotel: { e.Message }");
+                return new HotelResponse($"An error ocurred while deleting the hotel: " +
+                    $"{ e.Message } { e.InnerException?.Message }");
             }
         }
 

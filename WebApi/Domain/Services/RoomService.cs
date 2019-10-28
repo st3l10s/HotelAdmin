@@ -38,7 +38,8 @@ namespace WebApi.Domain.Services
             catch (Exception e)
             {
                 //TODO - Log the exception
-                return new RoomResponse($"An error ocurred while deleting the room: { e.Message }");
+                return new RoomResponse($"An error ocurred while deleting the room: " +
+                    $"{ e.Message } { e.InnerException?.Message }");
             }
         }
 
@@ -62,6 +63,10 @@ namespace WebApi.Domain.Services
 
         public async Task<RoomResponse> SaveAsync(Room room)
         {
+            if (!ChildEntitiesExist(room.RoomTypeID, room.HotelID, out string message))
+            {
+                return new RoomResponse(message);
+            }
             try
             {
                 await _roomRepository.AddAsync(room);
@@ -72,7 +77,8 @@ namespace WebApi.Domain.Services
             catch(Exception e)
             {
                 //TODO - Log the exception
-                return new RoomResponse($"An error ocurred while saving the room: { e.Message }");
+                return new RoomResponse($"An error ocurred while saving the room: " +
+                    $"{ e.Message } { e.InnerException?.Message }");
             }
         }
 
@@ -85,13 +91,19 @@ namespace WebApi.Domain.Services
                 return new RoomResponse("Room not found");
             }
 
-            existingRoom.Door = room.Door;
-            existingRoom.Enabled = room.Enabled;
-            existingRoom.Floor = room.Floor;
-            existingRoom.Hotel = room.Hotel;
+            if (!ChildEntitiesExist(room.RoomTypeID, room.HotelID, out string message))
+            {
+                return new RoomResponse(message);
+            }
+
+            existingRoom.Description = room.Description;
             existingRoom.Price = room.Price;
             existingRoom.Tax = room.Tax;
-            existingRoom.Type = room.Type;
+            existingRoom.Floor = room.Floor;
+            existingRoom.Door = room.Door;
+            existingRoom.Enabled = room.Enabled;
+            existingRoom.HotelID = room.HotelID;
+            existingRoom.RoomTypeID = room.RoomTypeID;
 
             try
             {
@@ -103,8 +115,27 @@ namespace WebApi.Domain.Services
             catch(Exception e)
             {
                 //TODO - Log the exception
-                return new RoomResponse($"An error ocurred while updating the room: { e.Message }");
+                return new RoomResponse($"An error ocurred while updating the room: " +
+                    $"{ e.Message } { e.InnerException?.Message }");
             }
+        }
+
+        private bool ChildEntitiesExist(int roomTypeID, int? hotelID, out string message)
+        {
+            var roomExists = _roomRepository.RoomTypeExists(roomTypeID).Result;
+            if (!roomExists)
+            {
+                message = $"Room type ID:{ roomTypeID } does not exist.";
+                return false;
+            }
+            var hotelExists = hotelID == null || _roomRepository.HotelExists((int)hotelID).Result;
+            if (!hotelExists)
+            {
+                message = $"Hotel ID:{ hotelID } does not exist.";
+                return false;
+            }
+            message = null;
+            return true;
         }
     }
 }

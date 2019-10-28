@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApi.Resources
 {
-    public class HotelResource
+    public class DisplayHotelResource
     {
         public int ID { get; set; }
         public string Description { get; set; }
-        public IList<RoomResource> Rooms { get; set; } = new List<RoomResource>();
+        public IList<DisplayRoomMinResource> Rooms { get; set; } = new List<DisplayRoomMinResource>();
     }
 }

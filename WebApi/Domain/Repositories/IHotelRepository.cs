@@ -13,5 +13,6 @@ namespace WebApi.Domain.Repositories
         Task<Hotel> FindByIdAsync(int id);
         void Update(Hotel hotel);
         void Remove(Hotel hotel);
+        Task<bool> CityExists(int id);
     }
 }

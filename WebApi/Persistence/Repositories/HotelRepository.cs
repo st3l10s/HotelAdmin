@@ -42,5 +42,10 @@ namespace WebApi.Persistence.Repositories
         {
             _context.Remove(hotel);
         }
+
+        public async Task<bool> CityExists(int id)
+        {
+            return await _context.Cities.AnyAsync(x => x.ID == id);
+        }
     }
 }

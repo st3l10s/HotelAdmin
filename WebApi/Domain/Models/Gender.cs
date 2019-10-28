@@ -2,11 +2,11 @@
 
 namespace WebApi.Domain.Models
 {
-    public class RoomType
+    public class Gender
     {
         public int ID { get; set; }
         public string Description { get; set; }
-        public int GuestsCapacity { get; set; }
-        public IList<Room> Rooms { get; set; } = new List<Room>();
+
+        public IList<Guest> Guests { get; set; } = new List<Guest>();
     }
 }

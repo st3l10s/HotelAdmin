@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebApi.Domain.Models;
 
-namespace WebApi.Domain.Models
+namespace WebApi.Resources
 {
-    public class Room
+    public class DisplayRoomResource
     {
         public int ID { get; set; }
         public string Description { get; set; }
@@ -11,13 +15,7 @@ namespace WebApi.Domain.Models
         public int Floor { get; set; }
         public int Door { get; set; }
         public bool Enabled { get; set; }
-
+        public RoomTypeResource RoomType { get; set; }
         public int? HotelID { get; set; }
-        public Hotel Hotel { get; set; }
-
-        public int RoomTypeID { get; set; }
-        public RoomType RoomType { get; set; }
-
-        public IList<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

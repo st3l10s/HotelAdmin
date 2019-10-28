@@ -13,6 +13,7 @@ namespace WebApi.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveHotelResource, Hotel>();
+            CreateMap<SaveRoomResource, Room>();
         }
     }
 }

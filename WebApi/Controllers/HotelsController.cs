@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,16 +31,16 @@ namespace WebApi.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<IEnumerable<HotelResource>> GetHotels()
+        public async Task<IEnumerable<DisplayHotelResource>> GetHotels()
         {
             var hotels = await _hotelService.ListAsync();
-            var hotelResources = _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelResource>>(hotels);
+            var hotelResources = _mapper.Map<IEnumerable<Hotel>, IEnumerable<DisplayHotelResource>>(hotels);
             return hotelResources;
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelResource>> GetHotel(int id)
+        public async Task<ActionResult<DisplayHotelResource>> GetHotel(int id)
         {
             var result = await _hotelService.FindByIdAsync(id);
 
@@ -49,14 +49,16 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            return _mapper.Map<Hotel, HotelResource>(result.Hotel);
+            var hotelResource = _mapper.Map<Hotel, DisplayHotelResource>(result.Hotel);
+
+            return hotelResource;
         }
 
         // PUT: api/Hotels/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<ActionResult<HotelResource>> PutHotel(int id, SaveHotelResource resource)
+        public async Task<ActionResult<DisplayHotelResource>> PutHotel(int id, SaveHotelResource resource)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +73,7 @@ namespace WebApi.Controllers
                 return BadRequest(result.Message);
             }
 
-            var hotelResource = _mapper.Map<Hotel, HotelResource>(result.Hotel);
+            var hotelResource = _mapper.Map<Hotel, DisplayHotelResource>(result.Hotel);
 
             return hotelResource;
         }
@@ -80,7 +82,7 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<HotelResource>> PostHotel(SaveHotelResource resource)
+        public async Task<ActionResult<DisplayHotelResource>> PostHotel(SaveHotelResource resource)
         {
             if (!ModelState.IsValid)
             {
@@ -95,14 +97,14 @@ namespace WebApi.Controllers
                 return BadRequest(result.Message);
             }
 
-            var hotelResource = _mapper.Map<Hotel, HotelResource>(result.Hotel);
+            var hotelResource = _mapper.Map<Hotel, DisplayHotelResource>(result.Hotel);
 
             return CreatedAtAction("GetHotel", new { id = hotelResource.ID }, hotelResource);
         }
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<HotelResource>> DeleteHotel(int id)
+        public async Task<ActionResult<DisplayHotelResource>> DeleteHotel(int id)
         {
             var result = await _hotelService.DeleteAsync(id);
             
@@ -111,9 +113,9 @@ namespace WebApi.Controllers
                 return BadRequest(result.Message);
             }
 
-            var hotel = _mapper.Map<Hotel, HotelResource>(result.Hotel);
+            var hotelResource = _mapper.Map<Hotel, DisplayHotelResource>(result.Hotel);
 
-            return hotel;
+            return hotelResource;
         }
     }
 }

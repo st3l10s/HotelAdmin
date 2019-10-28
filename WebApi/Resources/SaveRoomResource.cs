@@ -8,20 +8,21 @@ namespace WebApi.Resources
 {
     public class SaveRoomResource
     {
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         [MaxLength(50)]
         public string Description { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         [Required]
-        public decimal Tax { get; set; }
+        public decimal? Tax { get; set; }
         [Required]
-        public int Floor { get; set; }
+        public int? Floor { get; set; }
         [Required]
-        public int Door { get; set; }
+        public int? Door { get; set; }
         [Required]
-        public int HotelID { get; set; }
+        public bool? Enabled { get; set; } = true;
+        public int? HotelID { get; set; }
         [Required]
-        public int RoomTypeID { get; set; }
+        public int? RoomTypeID { get; set; }
     }
 }   
