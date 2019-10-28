@@ -209,12 +209,27 @@ namespace WebApi.Persistence.Contexts
                 .IsRequired();
             });
 
+            builder.Entity<EmergencyContact>(entity =>
+            {
+                entity.HasKey(k => k.BookingID);
 
+                entity.Property(p => p.Name)
+                .HasMaxLength(50)
+                .IsRequired();
+
+                entity.Property(p => p.LastName)
+                .HasMaxLength(50)
+                .IsRequired();
+
+                entity.Property(p => p.PhoneNumber)
+                .HasMaxLength(20)
+                .IsRequired();
+            });
         }
 
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<DocumentType> documentTypes { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<EmergencyContact> EmergencyContacts { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Guest> Guests { get; set; }

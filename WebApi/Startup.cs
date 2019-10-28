@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Domain.Models;
 using WebApi.Domain.Repositories;
 using WebApi.Domain.Services;
@@ -32,16 +33,22 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HotelAdminContext>();
-            services.AddControllers();
 
             services.AddScoped<IHotelRepository, HotelRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IGuestRepository, GuestRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IRoomService, RoomService>();
-            
+            services.AddScoped<IGuestService, GuestService>();
+
             services.AddAutoMapper(typeof(Startup));
+            services.AddControllers();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "Hotel Admin API", Version = "v1" });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +69,12 @@ namespace WebApi
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel Admin API");
+            //});
         }
     }
 }

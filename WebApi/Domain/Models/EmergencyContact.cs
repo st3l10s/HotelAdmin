@@ -8,7 +8,6 @@ namespace WebApi.Domain.Models
 {
     public class EmergencyContact
     {
-        [Key]
         public int BookingID { get; set; }
         public Booking Booking { get; set; }
         public string Name { get; set; }

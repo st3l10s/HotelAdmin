@@ -19,8 +19,7 @@ namespace WebApi.Resources
         public int? Floor { get; set; }
         [Required]
         public int? Door { get; set; }
-        [Required]
-        public bool? Enabled { get; set; } = true;
+        public bool? Enabled { get; set; }
         public int? HotelID { get; set; }
         [Required]
         public int? RoomTypeID { get; set; }

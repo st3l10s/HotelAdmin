@@ -59,7 +59,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -108,7 +108,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentType");
+                    b.ToTable("DocumentTypes");
 
                     b.HasData(
                         new
@@ -138,6 +138,31 @@ namespace WebApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WebApi.Domain.Models.EmergencyContact", b =>
+                {
+                    b.Property<int>("BookingID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("BookingID");
+
+                    b.ToTable("EmergencyContacts");
+                });
+
             modelBuilder.Entity("WebApi.Domain.Models.Gender", b =>
                 {
                     b.Property<int>("ID")
@@ -152,7 +177,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Gender");
+                    b.ToTable("Genders");
 
                     b.HasData(
                         new
@@ -224,7 +249,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("GenderID");
 
-                    b.ToTable("Guest");
+                    b.ToTable("Guests");
                 });
 
             modelBuilder.Entity("WebApi.Domain.Models.Hotel", b =>
@@ -357,6 +382,15 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Domain.Models.Room", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("RoomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Domain.Models.EmergencyContact", b =>
+                {
+                    b.HasOne("WebApi.Domain.Models.Booking", "Booking")
+                        .WithOne("EmergencyContact")
+                        .HasForeignKey("WebApi.Domain.Models.EmergencyContact", "BookingID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

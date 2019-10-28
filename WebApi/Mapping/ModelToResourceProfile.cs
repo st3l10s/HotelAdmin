@@ -16,6 +16,10 @@ namespace WebApi.Mapping
             CreateMap<Room, DisplayRoomResource>();
             CreateMap<Room, DisplayRoomMinResource>();
             CreateMap<RoomType, RoomTypeResource>();
+            CreateMap<City, CityResource>();
+            CreateMap<Booking, DisplayBookingResource>();
+            CreateMap<Guest, DisplayGuestResource>();
+            CreateMap<Guest, DisplayGuestMinResource>();
         }
     }
 }

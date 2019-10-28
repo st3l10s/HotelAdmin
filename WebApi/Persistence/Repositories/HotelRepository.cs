@@ -19,23 +19,29 @@ namespace WebApi.Persistence.Repositories
         public async Task AddAsync(Hotel hotel)
         {
             await _context.Hotels.AddAsync(hotel);
+            hotel.City = await _context.Cities.FindAsync(hotel.CityID);
         }
 
         public async Task<IEnumerable<Hotel>> ListAsync()
         {
             return await _context.Hotels
                 .Include(r => r.Rooms)
+                .Include(r => r.City)
                 .ToListAsync();
         }
 
         public async Task<Hotel> FindByIdAsync(int id)
         {
-            return await _context.Hotels.FindAsync(id);
+            return await _context.Hotels
+                .Include(r => r.Rooms)
+                .Include(r => r.City)
+                .FirstOrDefaultAsync(x => x.ID == id);
         }
 
         public void Update(Hotel hotel)
         {
             _context.Update(hotel);
+            hotel.City = _context.Cities.Find(hotel.CityID);
         }
 
         public void Remove(Hotel hotel)

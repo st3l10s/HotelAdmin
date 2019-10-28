@@ -27,6 +27,7 @@ namespace WebApi.Domain.Services
 
         public async Task<HotelResponse> SaveAsync(Hotel hotel)
         {
+            hotel.Enabled ??= true;
             try
             {
                 await _hotelRepository.AddAsync(hotel);
@@ -37,7 +38,7 @@ namespace WebApi.Domain.Services
             catch (Exception e)
             {
                 //TODO - Log the exception
-                return new HotelResponse($"An error ocurred while saving the Hotel: " +
+                return new HotelResponse("An error ocurred while saving the Hotel: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
         }
@@ -52,6 +53,8 @@ namespace WebApi.Domain.Services
             }
 
             existingHotel.Description = hotel.Description;
+            existingHotel.CityID = hotel.CityID;
+            existingHotel.Enabled = hotel.Enabled ?? existingHotel.Enabled;
 
             try
             {
@@ -86,6 +89,7 @@ namespace WebApi.Domain.Services
             }
             catch (Exception e)
             {
+                //TODO - log the exception
                 return new HotelResponse($"An error ocurred while deleting the hotel: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }

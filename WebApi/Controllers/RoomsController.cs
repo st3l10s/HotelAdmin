@@ -39,7 +39,7 @@ namespace WebApi.Controllers
 
             if (!result.Success)
             {
-                return NotFound();
+                return NotFound(result.Message);
             }
 
             return _mapper.Map<Room, DisplayRoomResource>(result.Room);

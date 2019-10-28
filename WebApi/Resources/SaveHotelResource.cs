@@ -11,8 +11,8 @@ namespace WebApi.Resources
         [Required]
         [MaxLength(50)]
         public string Description { get; set; }
-        public bool? Enabled { get; set; } = true;
+        public bool? Enabled { get; set; }
         [Required]
-        public int CityID { get; set; }
+        public int? CityID { get; set; }
     }
 }

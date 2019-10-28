@@ -10,7 +10,7 @@ namespace WebApi.Domain.Models
         public decimal Tax { get; set; }
         public int Floor { get; set; }
         public int Door { get; set; }
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public int? HotelID { get; set; }
         public Hotel Hotel { get; set; }

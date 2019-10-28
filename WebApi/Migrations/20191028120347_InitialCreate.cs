@@ -8,7 +8,7 @@ namespace WebApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "City",
+                name: "Cities",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -17,11 +17,11 @@ namespace WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.ID);
+                    table.PrimaryKey("PK_Cities", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DocumentType",
+                name: "DocumentTypes",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -30,11 +30,11 @@ namespace WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DocumentType", x => x.ID);
+                    table.PrimaryKey("PK_DocumentTypes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Gender",
+                name: "Genders",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -43,7 +43,7 @@ namespace WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Gender", x => x.ID);
+                    table.PrimaryKey("PK_Genders", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,9 +74,9 @@ namespace WebApi.Migrations
                 {
                     table.PrimaryKey("PK_Hotels", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Hotels_City_CityID",
+                        name: "FK_Hotels_Cities_CityID",
                         column: x => x.CityID,
-                        principalTable: "City",
+                        principalTable: "Cities",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -136,7 +136,27 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Guest",
+                name: "EmergencyContacts",
+                columns: table => new
+                {
+                    BookingID = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmergencyContacts", x => x.BookingID);
+                    table.ForeignKey(
+                        name: "FK_EmergencyContacts_Bookings_BookingID",
+                        column: x => x.BookingID,
+                        principalTable: "Bookings",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Guests",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -153,29 +173,29 @@ namespace WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Guest", x => x.ID);
+                    table.PrimaryKey("PK_Guests", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Guest_Bookings_BookingID",
+                        name: "FK_Guests_Bookings_BookingID",
                         column: x => x.BookingID,
                         principalTable: "Bookings",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Guest_DocumentType_DocumentTypeID",
+                        name: "FK_Guests_DocumentTypes_DocumentTypeID",
                         column: x => x.DocumentTypeID,
-                        principalTable: "DocumentType",
+                        principalTable: "DocumentTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Guest_Gender_GenderID",
+                        name: "FK_Guests_Genders_GenderID",
                         column: x => x.GenderID,
-                        principalTable: "Gender",
+                        principalTable: "Genders",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "City",
+                table: "Cities",
                 columns: new[] { "ID", "Description" },
                 values: new object[,]
                 {
@@ -188,7 +208,7 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "DocumentType",
+                table: "DocumentTypes",
                 columns: new[] { "ID", "Description" },
                 values: new object[,]
                 {
@@ -200,7 +220,7 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Gender",
+                table: "Genders",
                 columns: new[] { "ID", "Description" },
                 values: new object[,]
                 {
@@ -228,18 +248,18 @@ namespace WebApi.Migrations
                 column: "RoomID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Guest_BookingID",
-                table: "Guest",
+                name: "IX_Guests_BookingID",
+                table: "Guests",
                 column: "BookingID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Guest_DocumentTypeID",
-                table: "Guest",
+                name: "IX_Guests_DocumentTypeID",
+                table: "Guests",
                 column: "DocumentTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Guest_GenderID",
-                table: "Guest",
+                name: "IX_Guests_GenderID",
+                table: "Guests",
                 column: "GenderID");
 
             migrationBuilder.CreateIndex(
@@ -261,16 +281,19 @@ namespace WebApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Guest");
+                name: "EmergencyContacts");
+
+            migrationBuilder.DropTable(
+                name: "Guests");
 
             migrationBuilder.DropTable(
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "DocumentType");
+                name: "DocumentTypes");
 
             migrationBuilder.DropTable(
-                name: "Gender");
+                name: "Genders");
 
             migrationBuilder.DropTable(
                 name: "Rooms");
@@ -282,7 +305,7 @@ namespace WebApi.Migrations
                 name: "RoomTypes");
 
             migrationBuilder.DropTable(
-                name: "City");
+                name: "Cities");
         }
     }
 }

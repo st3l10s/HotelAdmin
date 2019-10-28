@@ -14,11 +14,19 @@ namespace WebApi.Domain.Communication
             Room = room;
         }
 
+        /// <summary>
+        /// Creates a success RoomResponse
+        /// </summary>
+        /// <param name="room"></param>
         public RoomResponse(Room room) : this(true, string.Empty, room)
         {
 
         }
 
+        /// <summary>
+        /// Creates an error RoomResponse
+        /// </summary>
+        /// <param name="message"></param>
         public RoomResponse(string message) : this(false, message, null)
         {
 

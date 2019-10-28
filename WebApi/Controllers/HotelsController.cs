@@ -46,7 +46,7 @@ namespace WebApi.Controllers
 
             if (!result.Success)
             {
-                return NotFound();
+                return NotFound(result.Message);
             }
 
             var hotelResource = _mapper.Map<Hotel, DisplayHotelResource>(result.Hotel);

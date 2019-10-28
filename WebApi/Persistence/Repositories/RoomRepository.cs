@@ -19,7 +19,7 @@ namespace WebApi.Persistence.Repositories
         public async Task AddAsync(Room room)
         {
             await _context.Rooms.AddAsync(room);
-            room.RoomType = _context.RoomTypes.Find(room.RoomTypeID);
+            room.RoomType = await _context.RoomTypes.FindAsync(room.RoomTypeID);
         }
 
         public async Task<Room> FindByIdAsync(int id)

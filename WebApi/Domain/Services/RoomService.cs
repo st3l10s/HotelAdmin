@@ -63,6 +63,7 @@ namespace WebApi.Domain.Services
 
         public async Task<RoomResponse> SaveAsync(Room room)
         {
+            room.Enabled ??= true;
             if (!ChildEntitiesExist(room.RoomTypeID, room.HotelID, out string message))
             {
                 return new RoomResponse(message);
@@ -101,7 +102,7 @@ namespace WebApi.Domain.Services
             existingRoom.Tax = room.Tax;
             existingRoom.Floor = room.Floor;
             existingRoom.Door = room.Door;
-            existingRoom.Enabled = room.Enabled;
+            existingRoom.Enabled = room.Enabled ?? existingRoom.Enabled;
             existingRoom.HotelID = room.HotelID;
             existingRoom.RoomTypeID = room.RoomTypeID;
 

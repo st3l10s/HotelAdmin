@@ -15,11 +15,19 @@ namespace WebApi.Domain.Communication
             Hotel = hotel;
         }
 
+        /// <summary>
+        /// Creates a success HotelResponse
+        /// </summary>
+        /// <param name="hotel"></param>
         public HotelResponse(Hotel hotel) : this(true, string.Empty, hotel)
         {
 
         }
 
+        /// <summary>
+        /// Creates an error HotelResponse
+        /// </summary>
+        /// <param name="message"></param>
         public HotelResponse(string message) : this(false, message, null)
         {
 
