@@ -17,6 +17,7 @@ namespace WebApi.Mapping
             CreateMap<SaveGuestResource, Guest>();
             CreateMap<SaveBookingResource, Booking>();
             CreateMap<SaveEmergencyContactResource, EmergencyContact>();
+            CreateMap<SaveBookingRoomResource, BookingRoom>();
         }
     }
 }

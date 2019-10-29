@@ -225,6 +225,9 @@ namespace WebApi.Persistence.Contexts
                 .HasMaxLength(20)
                 .IsRequired();
             });
+
+            builder.Entity<BookingRoom>()
+                .HasKey(br => new { br.BookingID, br.RoomID });
         }
 
         public DbSet<Booking> Bookings { get; set; }
@@ -236,5 +239,6 @@ namespace WebApi.Persistence.Contexts
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
+        public DbSet<BookingRoom> BookingRooms { get; set; }
     }
 }

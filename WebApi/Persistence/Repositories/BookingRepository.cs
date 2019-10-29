@@ -19,21 +19,20 @@ namespace WebApi.Persistence.Repositories
         public async Task AddAsync(Booking booking)
         {
             await _context.Bookings.AddAsync(booking);
-            booking.Room = await _context.Rooms.FindAsync(booking.RoomID);
         }
 
         public async Task<IEnumerable<Booking>> ListAsync()
         {
             return await _context.Bookings
                 .Include(r => r.Guests)
-                .Include(r => r.Room)
+                .Include(r => r.Rooms)
                 .ToListAsync();
         }
 
         public async Task<Booking> FindByIdAsync(int id)
         {
             return await _context.Bookings
-                .Include(r => r.Room)
+                .Include(r => r.Rooms)
                 .Include(r => r.Guests)
                 .FirstOrDefaultAsync(x => x.ID == id);
         }
@@ -41,7 +40,6 @@ namespace WebApi.Persistence.Repositories
         public void Update(Booking booking)
         {
             _context.Update(booking);
-            booking.Room = _context.Rooms.Find(booking.RoomID);
         }
 
         public void Remove(Booking booking)

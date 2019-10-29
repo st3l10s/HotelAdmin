@@ -12,10 +12,9 @@ namespace WebApi.Domain.Models
         public DateTime CheckOut { get; set; }
         public int GuestsQuantity { get; set; }
 
-        public int RoomID { get; set; }
-        public Room Room { get; set; }
         public EmergencyContact EmergencyContact { get; set; }
 
         public IList<Guest> Guests { get; set; } = new List<Guest>();
+        public IList<BookingRoom> Rooms { get; set; } = new List<BookingRoom>();
     }
 }

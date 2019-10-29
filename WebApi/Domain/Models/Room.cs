@@ -18,6 +18,6 @@ namespace WebApi.Domain.Models
         public int RoomTypeID { get; set; }
         public RoomType RoomType { get; set; }
 
-        public IList<Booking> Bookings { get; set; } = new List<Booking>();
+        public IList<BookingRoom> BookingRooms { get; set; } = new List<BookingRoom>();
     }
 }

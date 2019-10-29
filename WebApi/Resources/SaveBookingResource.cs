@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Domain.Models;
 
 namespace WebApi.Resources
 {
@@ -16,6 +17,6 @@ namespace WebApi.Resources
         public int? GuestsQuantity { get; set; }
 
         [Required]
-        public int? RoomID { get; set; }
+        public IList<SaveBookingRoomResource> Rooms { get; set; } = new List<SaveBookingRoomResource>();
     }
 }

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Domain.Models;
 using WebApi.Domain.Repositories;
 using WebApi.Domain.Services;
@@ -39,6 +38,7 @@ namespace WebApi
             services.AddScoped<IGuestRepository, GuestRepository>();
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IEmergencyContactRepository, EmergencyContactRepository>();
+            services.AddScoped<IBookingRoomRepository, BookingRoomRepository>();
 
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IRoomService, RoomService>();

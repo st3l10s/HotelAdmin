@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Persistence.Contexts;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(HotelAdminContext))]
-    partial class HotelAdminContextModelSnapshot : ModelSnapshot
+    [Migration("20191029162039_AddBookingRoom")]
+    partial class AddBookingRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

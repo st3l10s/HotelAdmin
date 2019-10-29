@@ -11,12 +11,14 @@ namespace WebApi.Domain.Services
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _bookingRepository;
+        private readonly IBookingRoomRepository _bookingRoomRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public BookingService(IBookingRepository bookingRepository, IUnitOfWork unitOfWork)
+        public BookingService(IBookingRepository bookingRepository, IUnitOfWork unitOfWork, IBookingRoomRepository bookingRoomRepository)
         {
             _bookingRepository = bookingRepository;
             _unitOfWork = unitOfWork;
+            _bookingRoomRepository = bookingRoomRepository;
         }
         public async Task<BookingResponse> DeleteAsync(int id)
         {
@@ -58,22 +60,28 @@ namespace WebApi.Domain.Services
         {
             var bookings = await _bookingRepository.ListAsync();
 
+            foreach (Booking booking in bookings)
+            {
+                booking.Rooms = await _bookingRoomRepository.ListByBookingID(booking.ID);
+            }
+
             return bookings;
         }
 
         public async Task<BookingResponse> SaveAsync(Booking booking)
         {
-            var roomExists = await _bookingRepository.RoomExists(booking.RoomID);
-
-            if (!roomExists)
+            int inexistentRoomID = await RoomsExist(booking.Rooms);
+            if (inexistentRoomID != int.MinValue)
             {
-                return new BookingResponse($"Room ID:{ booking.RoomID } does not exist");
+                return new BookingResponse($"Room ID:{ inexistentRoomID } does not exist");
             }
 
             try
             {
                 await _bookingRepository.AddAsync(booking);
                 await _unitOfWork.CompleteAsync();
+
+                booking.Rooms = await _bookingRoomRepository.ListByBookingID(booking.ID);
 
                 return new BookingResponse(booking);
             }
@@ -94,17 +102,16 @@ namespace WebApi.Domain.Services
                 return new BookingResponse("Booking not found");
             }
 
-            var roomExists = await _bookingRepository.RoomExists(booking.RoomID);
-
-            if (!roomExists)
+            int inexistentRoomID = await RoomsExist(booking.Rooms);
+            if (inexistentRoomID != int.MinValue)
             {
-                return new BookingResponse($"Room ID:{ booking.RoomID } does not exist");
+                return new BookingResponse($"Room ID:{ inexistentRoomID } does not exist");
             }
 
             existingBooking.CheckIn = booking.CheckIn;
             existingBooking.CheckOut = booking.CheckOut;
             existingBooking.GuestsQuantity = booking.GuestsQuantity;
-            existingBooking.RoomID = booking.RoomID;
+            //existingBooking.RoomID = booking.RoomID;
 
             try
             {
@@ -119,6 +126,19 @@ namespace WebApi.Domain.Services
                 return new BookingResponse($"An error ocurred while updating the Booking: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
+        }
+
+        private async Task<int> RoomsExist(IList<BookingRoom> rooms)
+        {
+            foreach (BookingRoom room in rooms)
+            {
+                if (!await _bookingRepository.RoomExists(room.RoomID))
+                {
+                    return room.RoomID;
+                }
+            }
+
+            return int.MinValue;
         }
     }
 }
