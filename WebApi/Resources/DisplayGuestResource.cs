@@ -16,8 +16,7 @@ namespace WebApi.Resources
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
-        public DocumentType DocumentType { get; set; }
-        public Gender Gender { get; set; }
-        public Booking Booking { get; set; }
+        public DocumentTypeResource DocumentType { get; set; }
+        public GenderResource Gender { get; set; }
     }
 }

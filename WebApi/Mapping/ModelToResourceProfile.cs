@@ -21,6 +21,10 @@ namespace WebApi.Mapping
             CreateMap<Guest, DisplayGuestResource>();
             CreateMap<Guest, DisplayGuestMinResource>();
             CreateMap<BookingRoom, DisplayBookingRoomResource>();
+            CreateMap<DocumentType, DocumentTypeResource>();
+            CreateMap<Gender, GenderResource>();
+            CreateMap<EmergencyContact, DisplayEmergencyContactResource>();
+
         }
     }
 }

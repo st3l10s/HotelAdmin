@@ -64,7 +64,7 @@ namespace WebApi.Controllers
 
             var roomResource = _mapper.Map<EmergencyContact, DisplayEmergencyContactResource>(result.EmergencyContact);
 
-            return CreatedAtAction("GetEmergencyContact", new { id = roomResource.ID }, roomResource);
+            return CreatedAtAction("GetEmergencyContact", new { id = roomResource.BookingID }, roomResource);
         }
 
         [HttpPut("{id}")]
