@@ -37,13 +37,18 @@ namespace WebApi
             services.AddScoped<IHotelRepository, HotelRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IGuestRepository, GuestRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IEmergencyContactRepository, EmergencyContactRepository>();
 
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IGuestService, GuestService>();
+            services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IEmergencyContactService, EmergencyContactService>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
