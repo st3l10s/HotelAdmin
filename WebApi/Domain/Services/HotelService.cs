@@ -19,15 +19,24 @@ namespace WebApi.Domain.Services
             _hotelRepository = hotelRepository;
             _unitOfWork = unitOfWork;
         }
-        public Task<IEnumerable<Hotel>> ListAsync()
+        public async Task<IEnumerable<Hotel>> ListAsync()
         {
-            var hotels = _hotelRepository.ListAsync();
+            var hotels = await _hotelRepository.ListAsync();
+
             return hotels;
         }
 
         public async Task<HotelResponse> SaveAsync(Hotel hotel)
         {
             hotel.Enabled ??= true;
+
+            var cityExists = await _hotelRepository.CityExists(hotel.CityID);
+
+            if (!cityExists)
+            {
+                return new HotelResponse($"City ID:{ hotel.CityID } does not exist");
+            }
+
             try
             {
                 await _hotelRepository.AddAsync(hotel);
@@ -52,6 +61,13 @@ namespace WebApi.Domain.Services
                 return new HotelResponse("Hotel not found");
             }
 
+            var cityExists = await _hotelRepository.CityExists(hotel.CityID);
+
+            if (!cityExists)
+            {
+                return new HotelResponse($"City ID:{ hotel.CityID } does not exist");
+            }
+
             existingHotel.Description = hotel.Description;
             existingHotel.CityID = hotel.CityID;
             existingHotel.Enabled = hotel.Enabled ?? existingHotel.Enabled;
@@ -66,7 +82,7 @@ namespace WebApi.Domain.Services
             catch(Exception e)
             {
                 //TODO - log the exception
-                return new HotelResponse($"An error ocurred while updating the hotel: " +
+                return new HotelResponse($"An error ocurred while updating the Hotel: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
         }
@@ -90,7 +106,7 @@ namespace WebApi.Domain.Services
             catch (Exception e)
             {
                 //TODO - log the exception
-                return new HotelResponse($"An error ocurred while deleting the hotel: " +
+                return new HotelResponse($"An error ocurred while deleting the Hotel: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
         }

@@ -12,7 +12,7 @@ namespace WebApi.Resources
         public DateTime CheckOut { get; set; }
         public int GuestsQuantity { get; set; }
         public DisplayHotelResource Hotel { get; set; }
-        public EmergencyContactResource EmergencyContact { get; set; }
+        public DisplayEmergencyContactResource EmergencyContact { get; set; }
         public IList<DisplayGuestMinResource> Guests { get; set; } = new List<DisplayGuestMinResource>();
     }
 }

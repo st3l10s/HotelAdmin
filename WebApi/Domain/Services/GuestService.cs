@@ -83,17 +83,35 @@ namespace WebApi.Domain.Services
 
         public async Task<GuestResponse> UpdateAsync(int id, Guest guest)
         {
-            var existingGues = await _guestRepository.FindByIdAsync(id);
+            var existingGuest = await _guestRepository.FindByIdAsync(id);
 
-            if (existingGues == null)
+            if (existingGuest == null)
             {
                 return new GuestResponse("Guest not found");
             }
 
-            _guestRepository.Update(guest);
-            await _unitOfWork.CompleteAsync();
+            existingGuest.Name = guest.Name;
+            existingGuest.LastName = guest.LastName;
+            existingGuest.BirthDay = guest.BirthDay;
+            existingGuest.Document = guest.Document;
+            existingGuest.Email = guest.Email;
+            existingGuest.PhoneNumber = guest.PhoneNumber;
+            existingGuest.DocumentTypeID = guest.DocumentTypeID;
+            existingGuest.GenderID = guest.GenderID;
+            existingGuest.BookingID = guest.BookingID;
 
-            return new GuestResponse(guest);
+            try
+            {
+                _guestRepository.Update(guest);
+                await _unitOfWork.CompleteAsync();
+                return new GuestResponse(guest);
+            }
+            catch (Exception e)
+            {
+                //TODO - Log the exception
+                return new GuestResponse("An error ocurred while updating the Guest " +
+                    $"{ e.Message } { e.InnerException?.Message }");
+            }
         }
     }
 }

@@ -16,9 +16,10 @@ namespace WebApi.Resources
         public DateTime BirthDay { get; set; }
         [Required]
         public string Document { get; set; }
-        [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
         [Required]

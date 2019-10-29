@@ -38,7 +38,7 @@ namespace WebApi.Domain.Services
             catch (Exception e)
             {
                 //TODO - Log the exception
-                return new RoomResponse($"An error ocurred while deleting the room: " +
+                return new RoomResponse($"An error ocurred while deleting the Room: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
         }
@@ -78,7 +78,7 @@ namespace WebApi.Domain.Services
             catch(Exception e)
             {
                 //TODO - Log the exception
-                return new RoomResponse($"An error ocurred while saving the room: " +
+                return new RoomResponse($"An error ocurred while saving the Room: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
         }
@@ -116,7 +116,7 @@ namespace WebApi.Domain.Services
             catch(Exception e)
             {
                 //TODO - Log the exception
-                return new RoomResponse($"An error ocurred while updating the room: " +
+                return new RoomResponse($"An error ocurred while updating the Room: " +
                     $"{ e.Message } { e.InnerException?.Message }");
             }
         }
